@@ -49,7 +49,7 @@ async function run() {
 
 
         const placeholder = `\${{ matrix.${key} }}`;
-        finalCommand = finalCommand.replace(new RegExp(placeholder, "g"), combo[key] ?? "");
+        finalCommand = finalCommand.replace(new RegExp(placeholder, "g"), combo[key] as string);
       }
 
       core.info(`Executando comando: ${finalCommand}`);
