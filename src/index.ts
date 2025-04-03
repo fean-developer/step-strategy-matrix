@@ -41,7 +41,6 @@ async function run() {
     for (const combo of combinations) {
       let finalCommand = commandTemplate;
 
-      console.log(`${combo}`);
 
       // Substitui os placeholders no comando
       for (const key in combo) {
@@ -50,6 +49,7 @@ async function run() {
 
         const placeholder = `\${{ matrix.${key} }}`;
         finalCommand = finalCommand.replace(new RegExp(placeholder, "g"), combo[key] as string);
+        console.log(`Comando após substituição: ${finalCommand}`);
       }
 
       core.info(`Executando comando: ${finalCommand}`);
