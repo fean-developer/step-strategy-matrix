@@ -25,7 +25,7 @@ async function run() {
             reject(error);
             return;
           }
-          core.info(`Saída (${env}): ${stdout}`);
+          core.info(`${stdout}`);
           resolve();
         });
       });
