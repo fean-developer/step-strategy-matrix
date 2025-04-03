@@ -2,7 +2,6 @@ import * as core from "@actions/core";
 import { exec } from "child_process";
 
 async function run() {
-  try {
     // Obtém os inputs
     const matrixInput = core.getInput("matrix", { required: true });
     const command = core.getInput("command", { required: true });
@@ -30,10 +29,6 @@ async function run() {
         });
       });
     }
-
-  } catch (error: any) {
-    // core.setFailed(`Erro: ${error.message}`);
-  }
 }
 
 run();
