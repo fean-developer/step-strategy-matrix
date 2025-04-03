@@ -46,7 +46,14 @@ async function run() {
       for (const key in combo) {
         const placeholderRegex = new RegExp(`\\$\\{\\{\\s*matrix\\.${key}\\s*\\}\\}`, "g");
         console.log(`Substituindo \${{ matrix.${key} }} por ${combo[key]}`);
-        finalCommand = finalCommand.replace(placeholderRegex, combo[key] as string);
+        
+        // Verifica se o placeholder existe no comando antes de substituir
+        if (placeholderRegex.test(finalCommand)) {
+          finalCommand = finalCommand.replace(placeholderRegex, combo[key] as string);
+        } else {
+          console.warn(`Placeholder \${{ matrix.${key} }} não encontrado no comando.`);
+        }
+      
         console.log(`Comando após substituição: ${finalCommand}`);
       }
 
