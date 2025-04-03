@@ -2,7 +2,6 @@ import * as core from "@actions/core";
 import { exec } from "child_process";
 
 async function run() {
-  try {
     // Obtém os inputs
     const matrixInput = core.getInput("matrix", { required: true });
     const command = core.getInput("command", { required: true });
@@ -29,7 +28,7 @@ async function run() {
           }
     
           if (error) {
-            // Rejeita a Promise com o erro, mas já exibiu as saídas
+            // Rejeita a Promise com uma mensagem personalizada, sem incluir o comando
             reject(new Error(`Erro ao executar o comando para o ambiente ${env}: ${error.message}`));
             return;
           }
@@ -38,10 +37,7 @@ async function run() {
         });
       });
     }
-
-  } catch (error: any) {
-    core.setFailed(`Erro: ${error.message}`);
-  }
+  
 }
 
 run();
