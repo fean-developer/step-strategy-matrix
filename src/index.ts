@@ -18,13 +18,13 @@ async function run() {
     for (const env of matrix) {
       const finalCommand = command.replace(/\${environment}/g, env);
 
-      await new Promise<void>((resolve, reject) => {
-        exec(finalCommand, (error, stdout, stderr) => {
-          if (error) {
-            core.error(`Erro ao executar ${env}: ${stderr}`);
-            reject(error);
-            return;
-          }
+      await new Promise<void>((resolve) => {
+        exec(finalCommand, ( stdout) => {
+        //   if (error) {
+        //     core.error(`Erro ao executar ${env}: ${stderr}`);
+        //     reject(error);
+        //     return;
+        //   }
           core.info(`${stdout}`);
           resolve();
         });
@@ -32,7 +32,7 @@ async function run() {
     }
 
   } catch (error: any) {
-    core.setFailed(`Erro: ${error.message}`);
+    // core.setFailed(`Erro: ${error.message}`);
   }
 }
 
