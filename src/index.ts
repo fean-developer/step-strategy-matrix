@@ -17,7 +17,7 @@ async function run() {
 
     // Gera todas as combinações possíveis dos valores
     const keys = Object.keys(matrix);
-    const valuesArray = Object.values(matrix);
+    const valuesArray: any = Object.values(matrix);
 
     const combinations: Record<string, string>[] = [];
 
@@ -26,7 +26,7 @@ async function run() {
         combinations.push({ ...current });
         return;
       }
-      const key = keys[index];
+      const key: any = keys[index];
       for (const value of valuesArray[index]) {
         current[key] = value;
         generateCombinations(index + 1, current);
@@ -41,11 +41,13 @@ async function run() {
     for (const combo of combinations) {
       let finalCommand = commandTemplate;
 
+      console.log(`${combo}`);
+
       // Substitui os placeholders no comando
       for (const key in combo) {
-        console.log(`Substituindo \${{ matrix.${key} }} por ${combo[key]}`);
+        console.log(`Substituindo ${key} por ${combo[key]}`);
 
-        
+
         const placeholder = `\${{ matrix.${key} }}`;
         finalCommand = finalCommand.replace(new RegExp(placeholder, "g"), combo[key] ?? "");
       }
