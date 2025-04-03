@@ -14,11 +14,14 @@ async function run() {
       throw new Error("O input 'matrix' deve ser um array JSON.");
     }
 
+    // Armazena os erros encontrados
+    const errors: string[] = [];
+
     // Itera sobre os ambientes e executa o comando para cada um
     for (const env of matrix) {
       const finalCommand = command.replace(/\${environment}/g, env);
 
-      await new Promise<void>((resolve, reject) => {
+      await new Promise<void>((resolve) => {
         exec(finalCommand, (error, stdout, stderr) => {
           // Exibe a saída padrão (stdout) e a saída de erro (stderr)
           if (stdout) {
@@ -29,19 +32,22 @@ async function run() {
           }
 
           if (error) {
-            // Rejeita a Promise com uma mensagem personalizada
-            reject(new Error(`O comando retornou com erro: matrix: ${env}: ${stderr}`));
-            
+            // Armazena o erro, mas não interrompe a execução
+            errors.push(`Erro no ambiente ${env}: ${stderr || error.message}`);
           }
 
           resolve();
         });
       });
     }
+
+    // Lança os erros acumulados, se houver
+    if (errors.length > 0) {
+      throw new Error(`Foram encontrados erros durante a execução:\n${errors.join("\n")}`);
+    }
   } catch (error) {
     // Captura e exibe o erro
     core.setFailed(`${error instanceof Error ? error.message : error}`);
-    return;
   }
 }
 
