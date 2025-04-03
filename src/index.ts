@@ -19,7 +19,7 @@ async function run() {
 
     // Itera sobre os ambientes e executa o comando para cada um
     for (const env of matrix) {
-      const finalCommand = command.replace(/\$\{\{\\s*matrix.environment\\s*\}\}/g, env);
+      const finalCommand = command.replace(/\{\{\\s*matrix.environment\\s*\}\}/g, env);
 
       await new Promise<void>((resolve) => {
         exec(finalCommand, (error, stdout, stderr) => {
