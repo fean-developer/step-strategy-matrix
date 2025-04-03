@@ -40,7 +40,7 @@ async function run() {
 
     generateCombinations();
 
-    core.info(`Executando para combinações: ${JSON.stringify(combinations, null, 2)}`);
+   // core.info(`Executando para combinações: ${JSON.stringify(combinations, null, 2)}`);
 
     // Itera sobre as combinações e executa o comando correspondente
     for (const combo of combinations) {
