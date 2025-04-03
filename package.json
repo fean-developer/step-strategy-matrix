@@ -1,0 +1,30 @@
+{
+  "name": "step-strategy-matrix",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {},
+  "keywords": [],
+  "author": "Francisco Nascimento <d19sp.developer@gmail.com>",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "clean": "rm -rf dist",
+    "transpile": "tsc -p .",
+    "package": "ncc build src/index.ts --source-map --minify --no-cache --out dist",
+    "build": "npm run clean && npm run transpile && npm run package",
+    "dev": "npm run build && node dist/index.js",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.0",
+    "@vercel/ncc": "^0.38.3",
+    "typescript": "^5.8.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.13"
+  }
+}
