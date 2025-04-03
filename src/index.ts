@@ -15,47 +15,19 @@ async function run() {
       throw new Error("O input 'matrix' deve ser um objeto YAML válido.");
     }
 
-    // Gera todas as combinações possíveis dos valores
-    const keys = Object.keys(matrix);
-    const valuesArray: any = Object.values(matrix);
-
-    const combinations: Record<string, string>[] = [];
-
-    function generateCombinations(index = 0, current: Record<string, string> = {}) {
-      if (index === keys.length) {
-        combinations.push({ ...current });
-        return;
-      }
-      const key: any = keys[index];
-      for (const value of valuesArray[index]) {
-        current[key] = value;
-        generateCombinations(index + 1, current);
-      }
+    // Obtém os valores da matriz
+    const environments = matrix.environment || [];
+    
+    if (environments.length === 0) {
+      throw new Error("Nenhum valor encontrado para 'matrix.environment'");
     }
 
-    generateCombinations();
+    core.info(`Executando para os ambientes: ${JSON.stringify(environments)}`);
 
-    core.info(`Executando para combinações: ${JSON.stringify(combinations, null, 2)}`);
-
-    // Itera sobre as combinações e executa o comando correspondente
-    for (const combo of combinations) {
-      let finalCommand = commandTemplate;
-
-
-      // Substitui os placeholders no comando
-      for (const key in combo) {
-        const placeholderRegex = new RegExp(`\\$\\{\\{\\s*matrix\\.${key}\\s*\\}\\}`, "g");
-        console.log(`Substituindo \${{ matrix.${key} }} por ${combo[key]}`);
-        
-        // Verifica se o placeholder existe no comando antes de substituir
-        if (placeholderRegex.test(commandTemplate)) {
-          finalCommand = commandTemplate.replace(placeholderRegex, combo[key] as string);
-        } else {
-          console.warn(`Placeholder \${{ matrix.${key} }} não encontrado no comando.`);
-        }
-      
-        console.log(`Comando após substituição: ${finalCommand}`);
-      }
+    // Itera sobre cada ambiente e executa o comando correspondente
+    for (const env of environments) {
+      // Substitui `${{ matrix.environment }}` pelo valor correto
+      const finalCommand = commandTemplate.replace(/\${{ matrix.environment }}/g, env);
 
       core.info(`Executando comando: ${finalCommand}`);
 
