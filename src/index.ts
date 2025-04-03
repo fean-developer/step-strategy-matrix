@@ -47,7 +47,7 @@ async function run() {
     }
   } catch (error) {
     // Captura e exibe o erro
-    core.setFailed(``);
+    core.setFailed(`${error instanceof Error ? error.message : ''}`);
   }
 }
 
