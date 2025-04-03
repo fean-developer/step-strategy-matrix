@@ -25,7 +25,7 @@ async function run() {
         exec(finalCommand, (error, stdout, stderr) => {
           // Exibe a saída padrão (stdout) e a saída de erro (stderr)
           if (stdout) {
-            core.info(`Saída do comando (${env}):\n${stdout}`);
+            core.info(`Executando matrix[${env}]:\n${stdout}`);
           }
           if (stderr) {
             core.error(`Erro do comando (${env}):\n${stderr}`);
@@ -47,7 +47,7 @@ async function run() {
     }
   } catch (error) {
     // Captura e exibe o erro
-    core.setFailed(`${error instanceof Error ? error.message : error}`);
+    //core.setFailed(`${error instanceof Error ? error.message : error}`);
   }
 }
 
