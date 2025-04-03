@@ -48,8 +48,8 @@ async function run() {
         console.log(`Substituindo \${{ matrix.${key} }} por ${combo[key]}`);
         
         // Verifica se o placeholder existe no comando antes de substituir
-        if (placeholderRegex.test(finalCommand)) {
-          finalCommand = finalCommand.replace(placeholderRegex, combo[key] as string);
+        if (placeholderRegex.test(commandTemplate)) {
+          finalCommand = commandTemplate.replace(placeholderRegex, combo[key] as string);
         } else {
           console.warn(`Placeholder \${{ matrix.${key} }} não encontrado no comando.`);
         }
