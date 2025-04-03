@@ -9,26 +9,30 @@ async function run() {
     const command = core.getInput("command", { required: true });
 
     // Converte YAML para objeto JSON
-    const matrix: Record<string, string[]> = yaml.load(matrixInput) as Record<string, string[]>;
+    const matrix = yaml.load(matrixInput) as Record<string, string[]>;
 
     if (typeof matrix !== "object" || Array.isArray(matrix)) {
       throw new Error("O input 'matrix' deve ser um objeto YAML válido.");
     }
 
-    // Gera todas as combinações possíveis dos valores
+    // Obtém as chaves da matriz (ex: environment)
     const keys = Object.keys(matrix);
     const valuesArray = Object.values(matrix);
 
     // Criar combinações cartesianas
     const combinations: Record<string, string>[] = [];
 
-    function generateCombinations(index = 0, current: Record<string, string> = {}) {
+    function generateCombinations(index = 0, current: Record<string, string> = {} as Record<string, string>) {
       if (index === keys.length) {
         combinations.push({ ...current });
         return;
       }
-      const key = keys[index];
-      for (const value of valuesArray[index]) {
+      const key: any = keys[index];
+      const values = valuesArray[index];
+      if (!values) {
+        throw new Error(`Valores ausentes para a chave: ${keys[index]}`);
+      }
+      for (const value of values) {
         current[key] = value;
         generateCombinations(index + 1, current);
       }
@@ -45,7 +49,7 @@ async function run() {
       // Substitui os placeholders no comando
       for (const key in combo) {
         const placeholder = `\${{ matrix.${key} }}`;
-        finalCommand = finalCommand.replace(new RegExp(placeholder, "g"), combo[key]);
+        finalCommand = finalCommand.replace(new RegExp(placeholder, "g"), combo[key] ?? "");
       }
 
       core.info(`Executando comando: ${finalCommand}`);
