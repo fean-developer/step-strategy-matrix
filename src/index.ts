@@ -31,7 +31,7 @@ async function run() {
           if (error) {
             // Rejeita a Promise com uma mensagem personalizada
             reject(new Error(`O comando retornou com erro: matrix: ${env}: ${stderr}`));
-            return;
+            
           }
 
           resolve();
@@ -41,6 +41,7 @@ async function run() {
   } catch (error) {
     // Captura e exibe o erro
     core.setFailed(`${error instanceof Error ? error.message : error}`);
+    return;
   }
 }
 
