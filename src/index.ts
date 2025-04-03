@@ -27,11 +27,11 @@ async function run() {
     // Itera sobre cada ambiente e executa o comando correspondente
     for (const env of environments) {
       // Substitui manualmente `${{ matrix.environment }}` pelo valor correto
-     const pattern = /\\${{\s*matrix.environment\s*}}/g;
+     const pattern = '\${\{(.*)}}'
      const found = commandTemplate.search(pattern);
      core.info(`Found: ${found}`);
 
-      let finalCommand = commandTemplate.replace(/\${\{\s*matrix.environment\s*}\}/g, env);
+      let finalCommand = commandTemplate.replace(pattern, env);
 
       core.info(`Executando comando: ${finalCommand}`);
 
