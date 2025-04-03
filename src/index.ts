@@ -29,7 +29,7 @@ async function run() {
     
           if (error) {
             // Rejeita a Promise com uma mensagem personalizada, sem incluir o comando
-            reject(new Error(`Erro ao executar o comando para o ambiente ${env}: ${error.message}`));
+            reject();
             return;
           }
     
