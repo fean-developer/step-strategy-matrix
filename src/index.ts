@@ -43,7 +43,7 @@ async function run() {
 
     // Lança os erros acumulados, se houver
     if (errors.length > 0) {
-      throw new Error(`Foram encontrados erros durante a execução:\n${errors.join("|")}`);
+      throw new Error(`Foram encontrados erros durante a execução: ${errors.join("|")}`);
     }
   } catch (error) {
     // Captura e exibe o erro
