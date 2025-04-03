@@ -33,7 +33,7 @@ async function run() {
 
           if (error) {
             // Armazena o erro, mas não interrompe a execução
-            errors.push(`Erro no ambiente ${env}: ${stderr || error.message}`);
+            errors.push(`Erro no ambiente ${env}: ${stderr}`);
           }
 
           resolve();
