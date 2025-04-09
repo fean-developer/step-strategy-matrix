@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "compilerOptions": {
+      "target": "ES2022",
+      "lib": ["ES2023"],
+      "module": "Node16",
+      "moduleResolution": "Node16",
+      "resolveJsonModule": true,
+      "baseUrl": ".",
+      "outDir": "dist",
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "sourceMap": true,
+      "newLine": "lf",
+      "strict": true,
+  
+      // Type-checking
+      "noUnusedLocals": false,
+      "noUnusedParameters": true,
+      "noImplicitReturns": true,
+      "noFallthroughCasesInSwitch": true,
+      "noUncheckedIndexedAccess": true,
+  
+      // Completeness
+      "skipLibCheck": true
+    },
+    "include": ["src/**/*","*.dic","*.aff"],
+    "exclude": ["node_modules", "dist", "src/**/*.spec.ts", "src/**/*.test.ts"]
+  }
+  

@@ -1,0 +1,24 @@
+name: "Strategy Matrix"
+description: "Simula uma matrix de job"
+
+branding:
+  icon: 'sliders'
+  color: 'white'
+
+inputs:
+  matrix:
+    description: "Lista de ambientes (ex: ['DEV', 'HOM'])"
+    required: true
+    default: "default"
+  command:
+    description: "Comando a ser executado"
+    required: true
+
+
+outputs:
+  result:
+    description: 'Resultado extraído da comparação'
+
+runs:
+  using: node20
+  main: dist/index.js
